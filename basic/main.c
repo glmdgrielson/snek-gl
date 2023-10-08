@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_keycode.h>
 
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1000
@@ -27,6 +28,25 @@ int main(int argc, char** argv) {
     if (err != GLEW_OK) {
         fprintf(stderr, "GLEW failed: %s\n", glewGetErrorString(err));
         return -1;
+    }
+
+    bool running = 1;
+
+    while (running) {
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_KEYDOWN) {
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        running = 0;
+                        break;
+                    default:
+                        break;
+                }
+            } else if (event.type == SDL_QUIT) {
+                running = 0;
+            }
+        }
     }
 
     SDL_GL_SwapWindow(window);
