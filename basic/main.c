@@ -34,10 +34,31 @@ int main(int argc, char** argv) {
     SDL_GLContext ctx = SDL_GL_CreateContext(window);
     GLenum glew_err = glewInit();
 
+    // Vertex array object
+    GLuint vertex_array_id;
+    glGenVertexArrays(1, &vertex_array_id);
+    glBindVertexArray(vertex_array_id);
+
     if (glew_err != GLEW_OK) {
         fprintf(stderr, "GLEW failed: %s\n", glewGetErrorString(glew_err));
         return 1;
     }
+
+    // The triangle we want to draw.
+    const GLfloat vertex_buffer_data[] = {
+        -1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f
+    };
+
+    // Create triangle
+    GLuint vertex_buffer;
+    // Make the buffer.
+    glGenBuffers(1, &vertex_buffer);
+    // Bind the buffer
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+    // Send the data to the buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
 
     bool running = 1;
 
@@ -57,6 +78,20 @@ int main(int argc, char** argv) {
             }
         }
         SDL_GL_SwapWindow(window);
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+        glVertexAttribPointer(
+            0, // attribute?
+            3, // size
+            GL_FLOAT, // type
+            GL_FALSE, // not normalized
+            0, // no stride, whatever that means
+            (void*) 0 // fake our offset because we're responsible devs
+        );
+
+        //Actually draw!
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisableVertexAttribArray(0); // What does that mean?
     }
 
     SDL_Quit();
