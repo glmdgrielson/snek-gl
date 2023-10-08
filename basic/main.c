@@ -14,20 +14,29 @@
 #define WINDOW_WIDTH 1000
 
 int main(int argc, char** argv) {
+    // Start up SDL.
+    int sdl_err = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
+    if (sdl_err != 0) {
+        fprintf(stderr, "SDL initialization failed: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    // Set up the window.
     uint32_t window_flags = SDL_WINDOW_OPENGL;
     SDL_Window *window = SDL_CreateWindow("OpenGL Test?", 0, 0, WINDOW_HEIGHT, WINDOW_WIDTH, window_flags);
 
     if (window == NULL) {
         fprintf(stderr, "Window did not initialize.");
-        return -1;
+        return 1;
     }
 
+    // GL stuff.
     SDL_GLContext ctx = SDL_GL_CreateContext(window);
-    GLenum err = glewInit();
+    GLenum glew_err = glewInit();
 
-    if (err != GLEW_OK) {
-        fprintf(stderr, "GLEW failed: %s\n", glewGetErrorString(err));
-        return -1;
+    if (glew_err != GLEW_OK) {
+        fprintf(stderr, "GLEW failed: %s\n", glewGetErrorString(glew_err));
+        return 1;
     }
 
     bool running = 1;
@@ -47,9 +56,10 @@ int main(int argc, char** argv) {
                 running = 0;
             }
         }
+        SDL_GL_SwapWindow(window);
     }
 
-    SDL_GL_SwapWindow(window);
+    SDL_Quit();
 
     return 0;
 }
