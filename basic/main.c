@@ -13,6 +13,65 @@
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1000
 
+GLuint compile_shader(const char *fragment, const char* vertex) {
+    // Error handling
+    GLint result = GL_FALSE;
+    GLint log_length = 0;
+
+    GLuint vertex_id = glCreateShader(GL_VERTEX_SHADER);
+    GLuint fragment_id = glCreateShader(GL_FRAGMENT_SHADER);
+
+    // Compile the vertex shader.
+    glShaderSource(vertex_id, 1, &vertex, NULL);
+    glCompileShader(vertex_id);
+
+    // Error check the vertex shader.
+    glGetShaderiv(vertex_id, GL_COMPILE_STATUS, &result);
+    if (result != GL_TRUE) {
+        glGetShaderiv(vertex_id, GL_INFO_LOG_LENGTH, &log_length);
+        char* error_msg = NULL;
+        glGetShaderInfoLog(vertex_id, log_length, NULL, error_msg);
+        fprintf(stderr, "%s\n", error_msg);
+    }
+
+    // Compile the fragment shader.
+    glShaderSource(fragment_id, 1, &fragment, NULL);
+    glCompileShader(fragment_id);
+
+    // Error check the fragment shader.
+    glGetShaderiv(fragment_id, GL_COMPILE_STATUS, &result);
+    if (result != GL_TRUE) {
+        glGetShaderiv(fragment_id, GL_INFO_LOG_LENGTH, &log_length);
+        char* error_msg = NULL;
+        glGetShaderInfoLog(fragment_id, log_length, NULL, error_msg);
+        fprintf(stderr, "%s\n", error_msg);
+    }
+
+    // Make the program.
+    GLuint program_id = glCreateProgram();
+    glAttachShader(program_id, vertex_id);
+    glAttachShader(program_id, fragment_id);
+    glLinkProgram(program_id);
+
+    // Check that linking succeeded.
+    glGetProgramiv(program_id, GL_LINK_STATUS, &result);
+    if (result != GL_TRUE) {
+        glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &log_length);
+        char* error_msg = NULL;
+        glGetProgramInfoLog(program_id, log_length, NULL, error_msg);
+        fprintf(stderr, "%s\n", error_msg);
+    }
+
+    // Cleanup the shaders.
+    glDetachShader(program_id, vertex_id);
+    glDetachShader(program_id, fragment_id);
+
+    glDeleteShader(vertex_id);
+    glDeleteShader(fragment_id);
+
+    return program_id;
+}
+
 int main(int argc, char** argv) {
     // Start up SDL.
     int sdl_err = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
