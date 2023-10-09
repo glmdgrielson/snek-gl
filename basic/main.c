@@ -14,18 +14,18 @@
 #define WINDOW_WIDTH 1000
 
 const char* VERTEX_SHADER =
-    "#version 330 core"
-    "layout(location = 0) in vec3 vertex_position;"
-    "void main() {"
-    "   gl_Position.xyz = vertex_position;"
-    "   gl_Position.w = 1.0"
+    "#version 330 core\n"
+    "layout(location = 0) in vec3 vertex_position;\n"
+    "void main() {\n"
+    "   gl_Position.xyz = vertex_position;\n"
+    "   gl_Position.w = 1.0;\n"
     "}";
 
 const char* FRAGMENT_SHADER =
-    "#version 330 core"
-    "out vec3 color;"
-    "void main() {"
-    "   color = vec3(0.73, 0.86, 0.93) // #BADBED"
+    "#version 330 core\n"
+    "out vec3 color;\n"
+    "void main() {\n"
+    "   color = vec3(0.73, 0.86, 0.93); // #BADBED\n"
     "}";
 
 GLuint compile_shader(const char *fragment, const char* vertex) {
@@ -44,7 +44,7 @@ GLuint compile_shader(const char *fragment, const char* vertex) {
     glGetShaderiv(vertex_id, GL_COMPILE_STATUS, &result);
     if (result != GL_TRUE) {
         glGetShaderiv(vertex_id, GL_INFO_LOG_LENGTH, &log_length);
-        char* error_msg = NULL;
+        GLchar error_msg[1024];
         glGetShaderInfoLog(vertex_id, log_length, NULL, error_msg);
         fprintf(stderr, "%s\n", error_msg);
     }
@@ -57,7 +57,7 @@ GLuint compile_shader(const char *fragment, const char* vertex) {
     glGetShaderiv(fragment_id, GL_COMPILE_STATUS, &result);
     if (result != GL_TRUE) {
         glGetShaderiv(fragment_id, GL_INFO_LOG_LENGTH, &log_length);
-        char* error_msg = NULL;
+        GLchar error_msg[1024];
         glGetShaderInfoLog(fragment_id, log_length, NULL, error_msg);
         fprintf(stderr, "%s\n", error_msg);
     }
@@ -72,7 +72,7 @@ GLuint compile_shader(const char *fragment, const char* vertex) {
     glGetProgramiv(program_id, GL_LINK_STATUS, &result);
     if (result != GL_TRUE) {
         glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &log_length);
-        char* error_msg = NULL;
+        GLchar error_msg[1024];
         glGetProgramInfoLog(program_id, log_length, NULL, error_msg);
         fprintf(stderr, "%s\n", error_msg);
     }
