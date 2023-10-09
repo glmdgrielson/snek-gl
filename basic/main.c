@@ -13,6 +13,21 @@
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1000
 
+const char* VERTEX_SHADER =
+    "#version 330 core"
+    "layout(location = 0) in vec3 vertex_position;"
+    "void main() {"
+    "   gl_Position.xyz = vertex_position;"
+    "   gl_Position.w = 1.0"
+    "}";
+
+const char* FRAGMENT_SHADER =
+    "#version 330 core"
+    "out vec3 color;"
+    "void main() {"
+    "   color = vec3(0.73, 0.86, 0.93) // #BADBED"
+    "}";
+
 GLuint compile_shader(const char *fragment, const char* vertex) {
     // Error handling
     GLint result = GL_FALSE;
@@ -121,7 +136,9 @@ int main(int argc, char** argv) {
 
     bool running = 1;
 
+    GLuint program_id = compile_shader(FRAGMENT_SHADER, VERTEX_SHADER);
     while (running) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYDOWN) {
@@ -137,6 +154,7 @@ int main(int argc, char** argv) {
             }
         }
         SDL_GL_SwapWindow(window);
+        glUseProgram(program_id);
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
         glVertexAttribPointer(
