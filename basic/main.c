@@ -137,8 +137,8 @@ int main(int argc, char** argv) {
     bool running = 1;
 
     GLuint program_id = compile_shader(FRAGMENT_SHADER, VERTEX_SHADER);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     while (running) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYDOWN) {
@@ -154,7 +154,6 @@ int main(int argc, char** argv) {
             }
         }
         SDL_GL_SwapWindow(window);
-        glUseProgram(program_id);
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
         glVertexAttribPointer(
@@ -167,6 +166,7 @@ int main(int argc, char** argv) {
         );
 
         //Actually draw!
+        glUseProgram(program_id);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0); // What does that mean?
     }
