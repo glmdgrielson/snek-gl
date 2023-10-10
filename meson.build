@@ -7,3 +7,7 @@ glew = dependency('glew')
 executable(
     'basic', 'basic/main.c',
     dependencies : [sdl, gl, glew])
+
+executable(
+    'matrix', 'matrix/main.c',
+    dependencies: [sdl, gl, glew])
