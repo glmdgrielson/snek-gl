@@ -12,12 +12,12 @@ typedef struct vectord {
 // A full four by four matrix.
 typedef struct matrixf {
     float v[4][4];
-} matrix;
+} matrix4;
 
 // vectorf new
 vectorf vectorf_new(float x, float y, float z, float w);
 
-const matrix MAT4_IDENTITY = {
+const matrix4 MAT4_IDENTITY = {
     .v = {
         {1, 0, 0, 0},
         {0, 1, 0, 0},
@@ -27,22 +27,22 @@ const matrix MAT4_IDENTITY = {
 };
 
 // Matrix constructor
-matrix matrix_identity();
+matrix4 matrix_identity();
 // Matrix scalar constructor. (Don't ask why there's no W here.)
-matrix matrix_scale(float x, float y, float z);
+matrix4 matrix_scale(float x, float y, float z);
 
 // # Matrix operations {{{
 
 // Matrix addition
-matrix* matrix_add(matrix *a, matrix *b, matrix *out);
+matrix4* matrix_add(matrix4 *a, matrix4 *b, matrix4 *out);
 
 // Matrix subtraction
-matrix* matrix_sub(matrix *a, matrix *b, matrix *out);
+matrix4* matrix_sub(matrix4 *a, matrix4 *b, matrix4 *out);
 
 // Matrix/matrix multiplication.
-matrix* matrix_mul(matrix *a, matrix *b, matrix *out);
+matrix4* matrix_mul(matrix4 *a, matrix4 *b, matrix4 *out);
 
-matrix* matrix_div(matrix *a, matrix *b, matrix *out);
+matrix4* matrix_div(matrix4 *a, matrix4 *b, matrix4 *out);
 
 // }}}
 

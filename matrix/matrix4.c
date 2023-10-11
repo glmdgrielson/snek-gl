@@ -11,8 +11,8 @@ vectorf vectorf_new(float x, float y, float z, float w) {
     return vec;
 }
 
-matrix matrix_identity() {
-    matrix m = {.v = {
+matrix4 matrix_identity() {
+    matrix4 m = {.v = {
         {1, 0, 0, 0},
         {0, 1, 0, 0},
         {0, 0, 1, 0},
@@ -21,8 +21,8 @@ matrix matrix_identity() {
     return m;
 }
 
-matrix matrix_scale(float x, float y, float z) {
-    matrix m = {.v = {
+matrix4 matrix_scale(float x, float y, float z) {
+    matrix4 m = {.v = {
         {x, 0, 0, 0},
         {0, y, 0, 0},
         {0, 0, z, 0},
@@ -33,7 +33,7 @@ matrix matrix_scale(float x, float y, float z) {
 
 // Matrix operations {{{
 
-matrix* matrix_add(matrix* a, matrix* b, matrix *out) {
+matrix4* matrix_add(matrix4* a, matrix4* b, matrix4 *out) {
     out->v[0][0] = a->v[0][0] + b->v[0][0];
     out->v[0][1] = a->v[0][1] + b->v[0][1];
     out->v[0][2] = a->v[0][2] + b->v[0][2];
@@ -57,7 +57,7 @@ matrix* matrix_add(matrix* a, matrix* b, matrix *out) {
     return out;
 }
 
-matrix* matrix_sub(matrix *a, matrix *b, matrix *out) {
+matrix4* matrix_sub(matrix4 *a, matrix4 *b, matrix4 *out) {
     out->v[0][0] = a->v[0][0] - b->v[0][0];
     out->v[0][1] = a->v[0][1] - b->v[0][1];
     out->v[0][2] = a->v[0][2] - b->v[0][2];
@@ -81,7 +81,7 @@ matrix* matrix_sub(matrix *a, matrix *b, matrix *out) {
     return out;
 }
 
-matrix* matrix_mul(matrix *a, matrix *b, matrix *out) {
+matrix4* matrix_mul(matrix4 *a, matrix4 *b, matrix4 *out) {
     // Declarations {{{
     float a00 = a->v[0][0],
         a01 = a->v[0][1],
@@ -147,7 +147,7 @@ matrix* matrix_mul(matrix *a, matrix *b, matrix *out) {
     return out;
 }
 
-matrix* matrix_div(matrix *a, matrix *b, matrix *out) {
+matrix4* matrix_div(matrix4 *a, matrix4 *b, matrix4 *out) {
     return out;
 }
 
