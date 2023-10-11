@@ -1,8 +1,8 @@
 // Matrix implementation stuff!
 #include "matrix/matrix4.h"
 
-vectorf vectorf_new(float x, float y, float z, float w) {
-    vectorf vec;
+vector4 vectorf_new(float x, float y, float z, float w) {
+    vector4 vec;
     vec.v[0] = x;
     vec.v[1] = y;
     vec.v[2] = z;

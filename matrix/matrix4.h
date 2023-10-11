@@ -4,10 +4,7 @@
 // A single column(?) of matrix data.
 typedef struct vectorf {
     float v[4];
-} vectorf;
-typedef struct vectord {
-    double v[4];
-} vectord;
+} vector4;
 
 // A full four by four matrix.
 typedef struct matrixf {
@@ -15,7 +12,7 @@ typedef struct matrixf {
 } matrix4;
 
 // vectorf new
-vectorf vectorf_new(float x, float y, float z, float w);
+vector4 vectorf_new(float x, float y, float z, float w);
 
 const matrix4 MAT4_IDENTITY = {
     .v = {
@@ -41,6 +38,8 @@ matrix4* matrix_sub(matrix4 *a, matrix4 *b, matrix4 *out);
 
 // Matrix/matrix multiplication.
 matrix4* matrix_mul(matrix4 *a, matrix4 *b, matrix4 *out);
+
+
 
 matrix4* matrix_div(matrix4 *a, matrix4 *b, matrix4 *out);
 
