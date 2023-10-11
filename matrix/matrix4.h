@@ -14,14 +14,14 @@ typedef struct matrixf {
 // vectorf new
 vector4 vectorf_new(float x, float y, float z, float w);
 
-const matrix4 MAT4_IDENTITY = {
-    .v = {
-        {1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1}
-    }
-};
+#define MAT4_IDENTITY { \
+    .v = { \
+        {1, 0, 0, 0}, \
+        {0, 1, 0, 0}, \
+        {0, 0, 1, 0}, \
+        {0, 0, 0, 1} \
+    } \
+}
 
 // Matrix constructor
 matrix4 matrix_identity();
@@ -31,15 +31,15 @@ matrix4 matrix_scale(float x, float y, float z);
 // # Matrix operations {{{
 
 // Matrix addition
-matrix4* matrix_add(matrix4 *a, matrix4 *b, matrix4 *out);
+matrix4 matrix_add(matrix4 *a, matrix4 *b);
 
 // Matrix subtraction
-matrix4* matrix_sub(matrix4 *a, matrix4 *b, matrix4 *out);
+matrix4 matrix_sub(matrix4 *a, matrix4 *b);
 
 // Matrix/matrix multiplication.
-matrix4* matrix_mul(matrix4 *a, matrix4 *b, matrix4 *out);
+matrix4 matrix_mul(matrix4 *a, matrix4 *b);
 
-matrix4* matrix_div(matrix4 *a, matrix4 *b, matrix4 *out);
+matrix4 matrix_div(matrix4 *a, matrix4 *b);
 
 // }}}
 
