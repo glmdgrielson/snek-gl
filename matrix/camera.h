@@ -4,7 +4,7 @@
 
 #include "matrix4.h"
 
-const float GLMD_PIf = 3.14159265358979323846264338327950288f;
+#define GLMD_PIf 3.14159265358979323846264338327950288f
 
 float deg2rad(float deg);
 
@@ -16,5 +16,7 @@ float deg2rad(float deg);
  *     (Stupid unit thinks it gets to be a normal number...)
  */
 matrix4 perspective(float fov, float aspect, float nearZ, float farZ);
+
+matrix4 look_at();
 
 #endif
