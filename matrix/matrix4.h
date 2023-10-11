@@ -39,8 +39,6 @@ matrix4* matrix_sub(matrix4 *a, matrix4 *b, matrix4 *out);
 // Matrix/matrix multiplication.
 matrix4* matrix_mul(matrix4 *a, matrix4 *b, matrix4 *out);
 
-
-
 matrix4* matrix_div(matrix4 *a, matrix4 *b, matrix4 *out);
 
 // }}}
