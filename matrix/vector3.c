@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "vector3.h"
 
 vector3 vec3_add(vector3* a, vector3* b) {
@@ -28,4 +30,20 @@ vector3 vec3_scale(vector3 *a, float scalar) {
     }};
 
     return out;
+}
+
+float vec3_norm(vector3 *vec) {
+    return sqrtf(vec->v[0] *vec->v[0] + vec->v[1] * vec->v[1] + vec->v[2] * vec->v[2]);
+}
+
+vector3 vec3_normalize(vector3 *vec) {
+    float norm = vec3_norm(vec);
+
+    if (norm == 0.0f) {
+        vec->v[0] = 0.0f;
+        vec->v[1] = 0.0f;
+        vec->v[2] = 0.0f;
+    }
+
+    return vec3_scale(vec, 1.0 / norm);
 }
