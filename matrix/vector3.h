@@ -24,4 +24,12 @@ void vec3_normalize(vector3 *vec);
 
 // }}}
 
+// Cross products {{{
+
+vector3 vec3_cross(vector3 *a, vector3 *b);
+
+vector3 vec3_cross_norm(vector3 *a, vector3 *b);
+
+// }}}
+
 #endif
