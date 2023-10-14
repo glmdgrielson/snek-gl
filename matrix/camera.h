@@ -3,6 +3,7 @@
 #define GLMD_CAMERA_H
 
 #include "matrix4.h"
+#include "vector3.h"
 
 #define GLMD_PIf 3.14159265358979323846264338327950288f
 
@@ -17,6 +18,6 @@ float deg2rad(float deg);
  */
 matrix4 perspective(float fov, float aspect, float nearZ, float farZ);
 
-matrix4 look_at();
+matrix4 look_at(vector3 eye, vector3 center, vector3 up);
 
 #endif
