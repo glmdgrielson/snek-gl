@@ -19,7 +19,8 @@ vector3 vec3_scale(vector3 *a, float scalar);
 
 float vec3_norm(vector3 *vec);
 
-vector3 vec3_normalize(vector3 *vec);
+// Normalize a vector-3 IN PLACE.
+void vec3_normalize(vector3 *vec);
 
 // }}}
 
