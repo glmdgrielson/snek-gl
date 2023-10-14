@@ -11,6 +11,8 @@
 #include <SDL2/SDL_keycode.h>
 
 #include "matrix4.h"
+#include "vector3.h"
+#include "camera.h"
 
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1000
@@ -18,9 +20,9 @@
 const char* VERTEX_SHADER =
     "#version 330 core\n"
     "layout(location = 0) in vec3 vertex_position;\n"
+    "uniform mat4 mvp;\n"
     "void main() {\n"
-    "   gl_Position.xyz = vertex_position;\n"
-    "   gl_Position.w = 1.0;\n"
+    "   gl_Position = mvp * vec4(vertex_position, 1);\n"
     "}";
 
 const char* FRAGMENT_SHADER =
@@ -110,6 +112,20 @@ int main(int argc, char** argv) {
     SDL_GLContext ctx = SDL_GL_CreateContext(window);
     GLenum glew_err = glewInit();
 
+    matrix4 projection = perspective(deg2rad(45.0f), (float)WINDOW_WIDTH /(float)WINDOW_HEIGHT, 0.0f, 100.0f);
+
+    vector3 center = {{4, 3, 3}};
+    vector3 eye = {{0, 0, 0}};
+    vector3 up = {{0, 1, 0}};
+    matrix4 view = look_at(eye, center, up);
+
+    matrix4 model = matrix_identity();
+
+    matrix4 mvp = matrix_mul(&projection, &view);
+    mvp = matrix_mul(&mvp, &model);
+
+    // matrix4 view = look_at({.v = {4, 3, 3}}, , )
+
     // Vertex array object
     GLuint vertex_array_id;
     glGenVertexArrays(1, &vertex_array_id);
@@ -139,6 +155,8 @@ int main(int argc, char** argv) {
     bool running = 1;
 
     GLuint program_id = compile_shader(FRAGMENT_SHADER, VERTEX_SHADER);
+
+    GLuint matrix_id = glGetUniformLocation(program_id, "mvp");
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     while (running) {
         SDL_Event event;
@@ -166,6 +184,7 @@ int main(int argc, char** argv) {
             0, // no stride, whatever that means
             (void*) 0 // fake our offset because we're responsible devs
         );
+        glUniformMatrix4fv(matrix_id, 1, GL_FALSE, &mvp.v[0][0]);
 
         //Actually draw!
         glUseProgram(program_id);
