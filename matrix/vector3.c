@@ -32,6 +32,10 @@ vector3 vec3_scale(vector3 *a, float scalar) {
     return out;
 }
 
+float vec3_dot(vector3 *a, vector3 *b) {
+    return a->v[0] * b->v[0] + a->v[1] * b->v[1] + a->v[2] * b->v[2];
+}
+
 float vec3_norm(vector3 *vec) {
     return sqrtf(vec->v[0] *vec->v[0] + vec->v[1] * vec->v[1] + vec->v[2] * vec->v[2]);
 }

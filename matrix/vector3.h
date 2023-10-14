@@ -13,6 +13,8 @@ vector3 vec3_sub(vector3 *a, vector3 *b);
 
 vector3 vec3_scale(vector3 *a, float scalar);
 
+float vec3_dot(vector3 *a, vector3 *b);
+
 // }}}
 
 // Normalization {{{
