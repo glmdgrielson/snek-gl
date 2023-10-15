@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
     SDL_GLContext ctx = SDL_GL_CreateContext(window);
     GLenum glew_err = glewInit();
 
-    matrix4 projection = perspective(deg2rad(45.0f), (float)WINDOW_WIDTH /(float)WINDOW_HEIGHT, 0.0f, 100.0f);
+    matrix4 projection = perspective(deg2rad(45.0f), (float)WINDOW_WIDTH /(float)WINDOW_HEIGHT, 0.1f, 100.0f);
 
     vector3 center = {{4, 3, 3}};
     vector3 eye = {{0, 0, 0}};
