@@ -18,10 +18,10 @@ matrix4 perspective(float fov, float aspect, float nearZ, float farZ) {
         {0, 0, 0, 0}
     }};
 
-    out.v[0][0] = tangent / aspect;
-    out.v[1][1] = tangent;
+    out.v[0][0] = 1 / (aspect * tangent);
+    out.v[1][1] = 1 / tangent;
     out.v[2][2] = (nearZ + farZ) / (farZ - nearZ);
-    out.v[2][3] = 1.0f;
+    out.v[2][3] =-1.0f;
     out.v[3][2] = (2.0f * farZ * nearZ) / (farZ - nearZ);
 
     return out;

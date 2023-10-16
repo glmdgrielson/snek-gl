@@ -91,6 +91,16 @@ GLuint compile_shader(const char *fragment, const char* vertex) {
     return program_id;
 }
 
+void debug_matrix(matrix4 mat, const char* name) {
+    for (int i = 0; i < 4; i++) {
+        fprintf(stderr, "Row %d of matrix %s is ", i, name);
+        for (int j = 0; j < 4; j++) {
+            fprintf(stderr, "%f, ", mat.v[i][j]);
+        }
+        fprintf(stderr, "\n");
+    }
+}
+
 int main(int argc, char** argv) {
     // Start up SDL.
     int sdl_err = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
@@ -113,11 +123,13 @@ int main(int argc, char** argv) {
     GLenum glew_err = glewInit();
 
     matrix4 projection = perspective(deg2rad(45.0f), (float)WINDOW_WIDTH /(float)WINDOW_HEIGHT, 0.1f, 100.0f);
+    debug_matrix(projection, "projection");
 
-    vector3 center = {{4, 3, 3}};
-    vector3 eye = {{0, 0, 0}};
+    vector3 eye = {{4, 3, 3}};
+    vector3 center = {{0, 0, 0}};
     vector3 up = {{0, 1, 0}};
     matrix4 view = look_at(eye, center, up);
+    debug_matrix(view, "view");
 
     matrix4 model = matrix_identity();
 
@@ -138,9 +150,9 @@ int main(int argc, char** argv) {
 
     // The triangle we want to draw.
     const GLfloat vertex_buffer_data[] = {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f
+        -1.0f, -1.0f, -0.5f,
+        1.0f, -1.0f, -0.5f,
+        0.0f, 1.0f, -0.5f
     };
 
     // Create triangle
@@ -184,10 +196,10 @@ int main(int argc, char** argv) {
             0, // no stride, whatever that means
             (void*) 0 // fake our offset because we're responsible devs
         );
-        glUniformMatrix4fv(matrix_id, 1, GL_FALSE, &mvp.v[0][0]);
 
         //Actually draw!
         glUseProgram(program_id);
+        glUniformMatrix4fv(matrix_id, 1, GL_FALSE, &mvp.v[0][0]);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0); // What does that mean?
     }
